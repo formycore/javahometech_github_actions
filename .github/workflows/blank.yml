@@ -3,7 +3,7 @@ name: Hello World
 on: push
 jobs:
     build:
-        runs-on: latest
+        runs-on: ubuntu-latest
         steps:
             - name: Build step
               run: echo "This is build step"
