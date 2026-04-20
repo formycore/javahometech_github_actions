@@ -1,9 +1,18 @@
 # push and pull triggers from any branch
 name: Hello World
-on: push
+# workflow for only specific branches, when code changes are pushed to specific branches then only the workflow triggers
+on:
+    push:
+        branches:
+            - main
+            - develop
+            - 'release/**' 
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
             - name: Build step
-              run: echo "This is build step"
+              run: echo "A Demo Build"
+
+
+

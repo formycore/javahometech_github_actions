@@ -1,0 +1,6 @@
+types of triggers
+- event based triggers
+- manual triggers
+- scheduled triggers
+- workflow triggers
+
