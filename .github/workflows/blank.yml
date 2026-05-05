@@ -1,8 +1,10 @@
-# this is for github actions for terraform
+name: Terraform Deploy
+
 on:
-    push:
-      branches:
-        - terraform_check
+  push:
+    branches:
+      - main
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -10,25 +12,25 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      
+
       - name: Login to DockerHub
-        uses: docker/login-actions@v3
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      - name: Build Docker image
-        run: docker build -t formycore/aws-terraform:latest .
-      
-      - name: Push Docker image
-        run: docker push -t formycore/aws-terraform:latest 
-      
-      - name: Run Terraform inside the container
+
+      - name: Build Docker Image
+        run: docker build -t your-dockerhub-username/aws-terraform:latest .
+
+      - name: Push Docker Image
+        run: docker push your-dockerhub-username/aws-terraform:latest
+
+      - name: Run Terraform inside container
         run: |
           docker run --rm \
-            -e AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
-            -e AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
             -e AWS_DEFAULT_REGION=ap-south-1 \
             -v ${{ github.workspace }}:/app \
-            formycore/aws-terraform:latest \
-            bash -c "terraform init && terraform apply -auto-approve"                        
+            your-dockerhub-username/aws-terraform:latest \
+            bash -c "terraform init && terraform apply -auto-approve"
