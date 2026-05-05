@@ -20,10 +20,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t formycoreaws-terraform:latest .
+        run: docker build -t formycore/aws-terraform:latest .
 
       - name: Push Docker Image
-        run: docker push formycoreaws-terraform:latest
+        run: docker push formycore/aws-terraform:latest
 
       - name: Run Terraform inside container
         run: |
@@ -32,5 +32,5 @@ jobs:
             -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
             -e AWS_DEFAULT_REGION=ap-south-1 \
             -v ${{ github.workspace }}:/app \
-            formycoreaws-terraform:latest \
+            formycore/aws-terraform:latest \
             bash -c "terraform init && terraform apply -auto-approve"
