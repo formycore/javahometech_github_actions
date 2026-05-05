@@ -93,3 +93,27 @@ jobs:
 - secrets and variables
 - actions
 - new repository variable
+
+name: Hello World
+# workflow for only specific branches, when code changes are pushed to specific branches then only the workflow triggers
+on:
+    push:
+        branches:
+            - main
+            - develop
+            - 'release/**'
+    pull_request:
+        types:
+            - opened
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Build step
+              run: echo "Hello, ${{ vars.MY_NAME }}"
+----------------------------------------------------------------------------------------------------------
+secrets
+- create secret in github
+- same as above but we have to use secrets instead of variables
+
